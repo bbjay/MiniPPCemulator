@@ -9,11 +9,15 @@ public class MiniPPCEmulator {
 		MiniPPC_CPU cpu = new MiniPPC_CPU(512);
 		
 		// load program code
-		short[] code = {0x01,0x00} ;
+		short[] code = {0x41f4,0x4003,0x4000,0x380} ;
 		cpu.loadCode(code);
 		
 		// run
 		cpu.runCycle();
+		
+		short[] op_args = {2, 500};
+		short out = new InstructionSetArchitecture().getByMnemonic("LWDD").assemble(op_args);
+		System.out.println(Integer.toBinaryString(out));
 	}
 	
 	public void run(int mode){};

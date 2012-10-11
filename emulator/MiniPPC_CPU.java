@@ -45,8 +45,13 @@ public class MiniPPC_CPU {
 	}
 
 	private void executeInstruction(Instruction op) {
-		// TODO Auto-generated method stub
-		
+		if (op != null){
+			System.out.print("execute " + op.mnemonic);
+			for (int i = 0; i < op.num_operands; i++) {
+				System.out.print(" " +op.operands[i]);
+			}
+			System.out.println();
+		}
 	}
 	
 	
