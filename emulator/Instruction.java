@@ -39,7 +39,7 @@ public class Instruction {
 			if (n == 1) {
 				bm += (short)( 1 << (15-i) );				
 			}
-			//System.out.printf("%s:%s %s %s\n",i, c, n, bm);
+			System.out.printf("%s:%s %s %s\n",i, c, n, bm);
 		}
 		return bm;
 	}

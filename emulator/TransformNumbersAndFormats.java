@@ -2,6 +2,13 @@ package ch.zhaw.inf3.emulator;
 
 public class TransformNumbersAndFormats{
 
+	
+	
+	
+	/**
+	 * @param op_pattern, for example: "0100010111110100"
+	 * @return short, the command in decimal form
+	 */
 	public static short binStringToDec(String op_pattern){
 		short bm = 0;
 
@@ -16,12 +23,29 @@ public class TransformNumbersAndFormats{
 		return bm;		
 	}
 	
+	/**
+	 * @param number, for example: 17908
+	 * @return String representing a 16-digit binary, for example: "0100010111110100"
+	 */
 	public static String decToBinString(int number){
-		
-		//String s = Integer.toString(number, 2); 
+
 		return String.format("%16s", Integer.toBinaryString(number)).replace(" ", "0");
-		//	return Integer.toString(number, 2); 
 		
+	}
+	
+	
+	
+	/**
+	 * @param command
+	 * @return String, representing 
+	 */
+	public static String assemble(String command){
+		
+		Instruction instruction = new InstructionSetArchitecture().getByMnemonic(command);
+		
+		
+		return "to be implemented";
+	//	short out = new InstructionSetArchitecture().getByMnemonic("LWDD").assemble(op_args);
 	}
 }
 
