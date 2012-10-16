@@ -16,7 +16,7 @@ public class MiniPPCEmulator {
 		cpu.runCycle();
 		
 		short[] op_args = {2, 500};
-		short out = new InstructionSetArchitecture().getByMnemonic("LWDD").assemble(op_args);
+		short out = new InstructionSetArchitecture().getByMnemonic("LWDD").encodeOperandValues(op_args);
 		System.out.println(Integer.toBinaryString(out));
 	}
 	

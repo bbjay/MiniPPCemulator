@@ -20,9 +20,18 @@ public class Instruction {
 		parseOperandMasksAndOffsets();
 	}
 	
-	public short assemble(short[] ops){
-		short out = 0;
-		return out;
+	public short encodeOperandValues(short[] ops){ 	// {2, 500}
+		short s=0;
+	if (num_operands==0){
+			return opcode_bitmask;
+	} else
+	{for(int i=0; i<ops.length; i++){
+	s&=ops[i]<<operand_offsets[i];
+	//s = s & (ops[i]<<operand_offsets[i]);
+	}
+	}
+	return (short)(opcode_bitmask & s);
+
 	}
 	
 	public void decodeOperandValues(short word){

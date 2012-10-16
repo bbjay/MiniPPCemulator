@@ -18,8 +18,7 @@ public class InstructionSetArchitecture {
 		instructions.add(new Instruction("CLR", "0000xx101<not u>", 1));
 		instructions.add(new Instruction("ADD", "0000xx111<not u>", 1));
 		instructions.add(new Instruction("ADDD", "1<----Zahl----->", 1));
-		instructions.add(new Instruction("INC", "00000000not used", 0));
-		instructions.add(new Instruction("DEC", "00000100not used", 0));
+	
 		
 		instructions.add(new Instruction("LWDD", "010-xx<#addr>", 2));
 		instructions.add(new Instruction("SWDD", "011-xx<#addr>", 2));
@@ -41,6 +40,9 @@ public class InstructionSetArchitecture {
 		instructions.add(new Instruction("BNZD", "00101-<Adresse->", 1));
 		instructions.add(new Instruction("BCD", "00111-<Adresse->", 1));
 		instructions.add(new Instruction("BD", "00100-<Adresse->", 1));
+		
+		instructions.add(new Instruction("INC", "00000001not used", 0));
+		instructions.add(new Instruction("DEC", "00000100not used", 0));
 		
 		instructions.add(new Instruction("END" , "0", 0));
 		
