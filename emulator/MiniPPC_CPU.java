@@ -31,7 +31,7 @@ public class MiniPPC_CPU {
 		Instruction op = isa.decodeWord(IR);
 		
 		// Increment IP
-		IP = (short) (IP + isa.word_width);
+		IP = (short) (IP + 1);
 		
 		// Execute
 		executeInstruction(op);
@@ -56,6 +56,7 @@ public class MiniPPC_CPU {
 			System.out.println("R"+i+": "+ register[i]);
 		}
 		System.out.println("IR: "+ IR );
+		System.out.println("IP: "+ IP );
 	}
 
 	private void executeInstruction(Instruction ins) {
