@@ -20,20 +20,16 @@ public class Instruction {
 		parseOperandMasksAndOffsets();
 	}
 	
-	public short encodeOperandValues(short[] ops){ 	// {2, 500}
-		short s=0;
-	if (num_operands==0){
-			return opcode_bitmask;
-	} else
-	{for(int i=0; i<ops.length; i++){
-	s&=ops[i]<<operand_offsets[i];
-	//s = s & (ops[i]<<operand_offsets[i]);
-	}
-	}
-	return (short)(opcode_bitmask & s);
+	public short encodeOperandValues(short[] ops) {
+		short s = opcode_bitmask;
+		for (int i = 0; i < num_operands; i++) {
+			s |= (ops[i] << operand_offsets[i]);
+			// s = s | (ops[i]<<operand_offsets[i]);
+		}
+		return s;
 
 	}
-	
+
 	public void decodeOperandValues(short word){
 		for (int i = 0; i < num_operands; i++) {
 			operands[i] = (short)((word & operand_bitmasks[i])  >>> operand_offsets[i]); // logical right shift
@@ -48,7 +44,7 @@ public class Instruction {
 			if (n == 1) {
 				bm += (short)( 1 << (15-i) );				
 			}
-			System.out.printf("%s:%s %s %s\n",i, c, n, bm);
+			//System.out.printf("%s:%s %s %s\n",i, c, n, bm);
 		}
 		return bm;
 	}
