@@ -68,14 +68,17 @@ public class MiniPPC_CPU {
 			System.out.println();
 			
 			String method_name = annotaion_parser.instruction_map.get(ins.mnemonic);
-			System.out.println(annotaion_parser.instruction_map.size() +" "+  method_name);
-			try {
-				Method m = this.getClass().getDeclaredMethod(method_name, Instruction.class);
-				m.invoke(this, ins);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
 			
+			if (method_name != null)
+				try {
+					Method m = this.getClass().getDeclaredMethod(method_name, Instruction.class);
+					m.invoke(this, ins);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			else {
+				System.err.println("Instruction not implemented: " + ins.mnemonic);
+			}
 		}
 	}
 	
