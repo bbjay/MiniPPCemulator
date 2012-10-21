@@ -21,16 +21,16 @@ public class Instruction {
 	}
 	
 	public short encodeOperandValues(short[] ops){ 	// {2, 500}
-		short s=0;
+		short s=opcode_bitmask;
 	if (num_operands==0){
-			return opcode_bitmask;
+			return s;
 	} else
 	{for(int i=0; i<ops.length; i++){
-	s&=ops[i]<<operand_offsets[i];
-	//s = s & (ops[i]<<operand_offsets[i]);
+	s|=ops[i]<<operand_offsets[i];
+	//s = (short)(s & (ops[i]<<operand_offsets[i]));
 	}
 	}
-	return (short)(opcode_bitmask & s);
+	return s;
 
 	}
 	

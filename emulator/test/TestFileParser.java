@@ -38,11 +38,11 @@ public class TestFileParser {
 			System.out.println(s);
 		}
 			
-		assertEquals("0100000111110110", list.get(0));	
-		assertEquals("0100010111110100", list.get(1));
-		assertEquals("0000011110000000", list.get(2));
-		assertEquals("0110000111111010", list.get(3));
-		assertEquals("0000000000000000", list.get(4));
+		assertEquals("LWDD R0 #502", list.get(0));	
+		assertEquals("LWDD R1 #500", list.get(1));
+		assertEquals("ADD R1", list.get(2));
+		assertEquals("SWDD R0 #506", list.get(3));
+		assertEquals("END", list.get(4));
 	
 	}
 }
