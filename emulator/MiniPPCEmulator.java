@@ -13,7 +13,7 @@ public class MiniPPCEmulator {
 		MiniPPC_CPU cpu = new MiniPPC_CPU(512);
 		
 		FileParser fp = new FileParser();
-		Translator tr = new Translator();
+		AssemblerCompiler tr = new AssemblerCompiler();
 		
 		
 		// load program code

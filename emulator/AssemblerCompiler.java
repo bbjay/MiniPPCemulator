@@ -2,9 +2,9 @@ package ch.zhaw.inf3.emulator;
 
 import java.util.List;
 
-public class Translator {
+public class AssemblerCompiler {
 	
-	public Translator(){
+	public AssemblerCompiler(){
 	
 	}
 
