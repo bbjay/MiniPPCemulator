@@ -15,8 +15,6 @@ public class InstructionSetArchitecture {
 		word_width = word_bits/8;
 		instructions = new ArrayList<Instruction>();
 		
-		instructions.add(new Instruction("CLR", "0000xx101<not u>", 1));
-		instructions.add(new Instruction("ADD", "0000xx111<not u>", 1));
 		instructions.add(new Instruction("ADDD", "1<----Zahl----->", 1));
 	
 		
@@ -43,6 +41,9 @@ public class InstructionSetArchitecture {
 		
 		instructions.add(new Instruction("INC", "00000001not used", 0));
 		instructions.add(new Instruction("DEC", "00000100not used", 0));
+
+		instructions.add(new Instruction("CLR", "0000xx101<not u>", 1));
+		instructions.add(new Instruction("ADD", "0000xx111<not u>", 1));
 		
 		instructions.add(new Instruction("END" , "0", 0));
 		
