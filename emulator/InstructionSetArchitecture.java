@@ -50,8 +50,9 @@ public class InstructionSetArchitecture {
 
 	public Instruction decodeWord(short word) {
 		for (Instruction i : instructions) {
-			//System.out.println(Integer.toBinaryString(i.opcode_bitmask));
-			//System.out.println(Integer.toBinaryString(word));
+			//System.out.println(TransformNumbersAndFormats.decToBinString(i.opcode_bitmask));
+			//System.out.println(TransformNumbersAndFormats.decToBinString(word));
+			
 			if ( (short)(i.opcode_bitmask & word) == i.opcode_bitmask) {
 				i.decodeOperandValues(word);
 				return i;
