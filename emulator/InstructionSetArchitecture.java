@@ -7,7 +7,7 @@ public class InstructionSetArchitecture {
 	public short start_offset;
 	public int word_width;
 	public int word_bits;
-	private List<Instruction> instructions;
+	public List<Instruction> instructions;
 
 	public InstructionSetArchitecture() {
 		start_offset = 100; // program memory start offset
