@@ -14,6 +14,8 @@ public class MiniPPC_CPU {
 	private InstructionSetArchitecture isa;
 	private InsImplAnnotationParser annotaion_parser;
 
+	public boolean isHalted = false;
+
 	public MiniPPC_CPU(int memory){
 		this.RAM = new short[memory];
 		this.isa = new InstructionSetArchitecture();
@@ -37,6 +39,11 @@ public class MiniPPC_CPU {
 		executeInstruction(op);
 		
 		cycle_count = cycle_count + 1;
+	}
+	
+	public void reset(){
+		IP = isa.start_offset;
+		isHalted = false;
 	}
 
 	public void loadCode(short[] words){
@@ -91,13 +98,16 @@ public class MiniPPC_CPU {
 		// check for overflow, set carry
 	}
 	
-	private void end(){}
+	@InstructionImpl("END")
+	private void end(Instruction ins){
+		isHalted = true;
+	}
 	
 	private void shiftLeftLogical(){}
 
 	@InstructionImpl("LWDD")
 	private void loadWordDirect(Instruction ins){
-		System.out.println("invoked lwdd with op1:" + ins.operands[0] + " op2:" + ins.operands[1]);
+		//System.out.println("invoked lwdd with op1:" + ins.operands[0] + " op2:" + ins.operands[1]);
 		register[ins.operands[0] ] = RAM[ins.operands[1]];
 	}
 	
