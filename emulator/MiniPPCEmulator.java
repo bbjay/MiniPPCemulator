@@ -14,6 +14,7 @@ public class MiniPPCEmulator {
 		MiniPPCEmulator emu = new MiniPPCEmulator();
 		
 		emu.loadAssemblerCodeFromFile("src/ch/zhaw/inf3/emulator/test/resources/program1.txt");
+		emu.loadParameters(new short[]{ 1, 2, 3 });
 		emu.run(0);
 
 	}
@@ -43,6 +44,10 @@ public class MiniPPCEmulator {
 			e.printStackTrace();
 		}
 	};
+	
+	public void loadParameters(short[] params){
+		cpu.loadDataAtOffset(params, 500);
+	}
 	
 	public void compileAssembler(){};
 	
