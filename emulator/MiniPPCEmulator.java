@@ -3,9 +3,10 @@ package ch.zhaw.inf3.emulator;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Scanner;
 
 public class MiniPPCEmulator {
-	MiniPPC_CPU cpu;
+	private MiniPPC_CPU cpu;
 
 	/**
 	 * @param args
@@ -15,7 +16,7 @@ public class MiniPPCEmulator {
 		
 		emu.loadAssemblerCodeFromFile("src/ch/zhaw/inf3/emulator/test/resources/program1.txt");
 		emu.loadParameters(new short[]{ 1, 2, 3 });
-		emu.run(0);
+		emu.runSlow();
 
 	}
 	
@@ -23,13 +24,32 @@ public class MiniPPCEmulator {
 		cpu = new MiniPPC_CPU(512);
 	}
 	
-	public void run(int mode){
-		cpu.runCycle();
+	public void runFast(){
+		while (!cpu.isHalted) {
+			cpu.runCycle();
+		}
 		cpu.printRegisters();
-
-		cpu.runCycle();
-		cpu.printRegisters();
-	};
+		cpu.reset();
+	}
+	
+	public void runSlow(){
+		while (!cpu.isHalted) {
+			cpu.runCycle();
+			cpu.printRegisters();
+		}
+		cpu.reset();
+	}
+	
+	public void runSteped(){
+		Scanner input = new Scanner(System.in);
+		do {
+			cpu.runCycle();
+			cpu.printRegisters();
+		} while (!cpu.isHalted && !input.nextLine().equals("q"));
+		
+		input.close();
+		cpu.reset();
+	}
 	
 	public void loadMachineCodeFromFile(){};
 	
