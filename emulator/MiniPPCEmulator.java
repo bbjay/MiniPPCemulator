@@ -5,44 +5,44 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class MiniPPCEmulator {
+	MiniPPC_CPU cpu;
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		MiniPPC_CPU cpu = new MiniPPC_CPU(512);
+		MiniPPCEmulator emu = new MiniPPCEmulator();
 		
-		FileParser fp = new FileParser();
-		AssemblerCompiler tr = new AssemblerCompiler();
-		
-		
-		// load program code
-		//short[] code = {0x41f4,0x4003,0x4000,0x380} ;
-		short[] code;
-		try {
-			cpu.loadCode(tr.decodingAssemblerOrder(fp.load(new File("src/ch/zhaw/inf3/emulator/test/resources/program1.txt"))));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		//cpu.loadCode(code);
-		
-		// run
+		emu.loadAssemblerCodeFromFile("src/ch/zhaw/inf3/emulator/test/resources/program1.txt");
+		emu.run(0);
+
+	}
+	
+	public MiniPPCEmulator(){
+		cpu = new MiniPPC_CPU(512);
+	}
+	
+	public void run(int mode){
 		cpu.runCycle();
 		cpu.printRegisters();
 
 		cpu.runCycle();
 		cpu.printRegisters();
-	}
-	
-	public void run(int mode){};
+	};
 	
 	public void loadMachineCodeFromFile(){};
 	
-	public void loadAssemblerCodeFromFile(){};
+	public void loadAssemblerCodeFromFile(String fileName){
+		FileParser fp = new FileParser();
+		AssemblerCompiler asmc = new AssemblerCompiler2();
+		try {
+			cpu.loadCode(asmc.decodingAssemblerOrder(fp.load(new File(fileName))));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	};
 	
 	public void compileAssembler(){};
 	
