@@ -118,6 +118,9 @@ public class MiniPPC_CPU {
 		//System.out.println("invoked lwdd with op1:" + ins.operands[0] + " op2:" + ins.operands[1]);
 		register[ins.operands[0] ] = RAM[ins.operands[1]];
 	}
-	
-	private void storeWordDirect(){}
+
+	@InstructionImpl("SWDD")
+	private void storeWordDirect(Instruction ins){
+		RAM[ins.operands[1]] = register[ins.operands[0]];
+	}
 }
