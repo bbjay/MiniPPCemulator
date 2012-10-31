@@ -22,6 +22,7 @@ public class Instruction {
 	
 	public short encodeOperandValues(short[] ops) {
 		short s = opcode_bitmask;
+		operands = ops;
 		for (int i = 0; i < num_operands; i++) {
 			s |= (ops[i] << operand_offsets[i]);
 			// s = s | (ops[i]<<operand_offsets[i]);
