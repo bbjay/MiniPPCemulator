@@ -65,6 +65,14 @@ public class MiniPPC_CPU {
 		System.out.println("IR: "+ IR );
 		System.out.println("IP: "+ IP );
 	}
+	
+	public void printRam(){
+		System.out.print("RAM[500:]: ");
+		for (int i = 500; i < RAM.length; i++) {
+			System.out.print(String.format("0x%4s",Integer.toHexString(RAM[i])).replace(" ", "0") +" ");
+		}
+		System.out.println();
+	}
 
 	private void executeInstruction(Instruction ins) {
 		if (ins != null){

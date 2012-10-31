@@ -29,6 +29,7 @@ public class MiniPPCEmulator {
 			cpu.runCycle();
 		}
 		cpu.printRegisters();
+		cpu.printRam();
 		cpu.reset();
 	}
 	
@@ -36,6 +37,7 @@ public class MiniPPCEmulator {
 		while (!cpu.isHalted) {
 			cpu.runCycle();
 			cpu.printRegisters();
+			cpu.printRam();
 		}
 		cpu.reset();
 	}
@@ -45,6 +47,7 @@ public class MiniPPCEmulator {
 		do {
 			cpu.runCycle();
 			cpu.printRegisters();
+			cpu.printRam();
 		} while (!cpu.isHalted && !input.nextLine().equals("q"));
 		
 		input.close();
