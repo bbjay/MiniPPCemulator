@@ -53,7 +53,7 @@ public class TestISA {
 		short[] ops = new short[2];
 		for (int i=0; i < testInstruction.num_operands; i++) {
 			ops[i] = (short)(testInstruction.operand_bitmasks[i] >> testInstruction.operand_offsets[i]);
-			//System.out.println(ops[i] +" "+ TransformNumbersAndFormats.decToBinString(ops[i]));
+			//System.out.println(TransformNumbersAndFormats.decToBinString(ops[i]) +" "+ ops[i]);
 		}
 		short word = testInstruction.encodeOperandValues(ops);
 		Instruction decodedIns = isa.decodeWord(word);

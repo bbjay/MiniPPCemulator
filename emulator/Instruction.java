@@ -58,7 +58,7 @@ public class Instruction {
 		for (int i = 0; i < num_operands && index != -1; i++) {
 			index = opcode_pattern.indexOf("xx", index+2);
 			if (index >= 0) {
-				int offset = 15 - (index+2);
+				int offset = 16 - (index+2);
 				operand_offsets[i] = offset;
 				operand_bitmasks[i]= (short)(0x03 << offset);
 				found++;
@@ -70,7 +70,7 @@ public class Instruction {
 			int start = opcode_pattern.indexOf('<',0);
 			if (start >= 0) {
 				operand_offsets[found] = 0;
-				operand_bitmasks[found] = (short)(0xffff >>> (start+1)) ;
+				operand_bitmasks[found] = (short)(0xffff >>> start) ;
 			}
 		}
 	}
