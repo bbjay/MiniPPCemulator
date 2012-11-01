@@ -9,7 +9,7 @@ public class AssemblerCompiler2 extends AssemblerCompiler {
 		isa = new InstructionSetArchitecture();
 	}
 
-	public short[] decodingAssemblerOrder(List<String> list) {
+	public short[] compile(List<String> list) {
 		short[] code = new short[list.size()];
 		for (int i = 0; i < list.size(); i++) {
 			String[] subString = list.get(i).split(" ");

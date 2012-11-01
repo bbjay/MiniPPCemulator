@@ -60,7 +60,7 @@ public class MiniPPCEmulator {
 		FileParser fp = new FileParser();
 		AssemblerCompiler asmc = new AssemblerCompiler2();
 		try {
-			cpu.loadCode(asmc.decodingAssemblerOrder(fp.load(new File(fileName))));
+			cpu.loadCode(asmc.compile(fp.load(new File(fileName))));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

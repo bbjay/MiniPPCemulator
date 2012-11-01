@@ -8,7 +8,7 @@ public class AssemblerCompiler {
 	
 	}
 
-	public short[] decodingAssemblerOrder(List<String> list){
+	public short[] compile(List<String> list){
 		short[] code=new short[list.size()];
 		for(int i=0; i<list.size();i++){
 			String[]subArray=list.get(i).split(" ");
