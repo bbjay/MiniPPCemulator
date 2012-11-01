@@ -10,7 +10,7 @@ public class MiniPPC_CPU {
 	private short RAM[];
 	private short IP; // Next Instruction Pointer
 	private short IR; // Instruction Register
-	private boolean carry;
+	private int carry;
 	private InstructionSetArchitecture isa;
 	private InsImplAnnotationParser annotaion_parser;
 
@@ -100,18 +100,34 @@ public class MiniPPC_CPU {
 	
 	// Instruction Implementations
 	
+	@InstructionImpl("CLR")
+	private void clr(Instruction ins){
+		register[ins.operands[0]] = 0;
+	}
+	
+	@InstructionImpl("ADDD")
+	private void addd(Instruction ins){
+		register[0] += ins.operands[0];
+		// check for overflow, set carry
+	}
+	
 	@InstructionImpl("ADD")
 	private void add(Instruction ins){
 		register[0] += register[ins.operands[0]];
 		// check for overflow, set carry
 	}
 	
-	@InstructionImpl("END")
-	private void end(Instruction ins){
-		isHalted = true;
+	@InstructionImpl("INC")
+	private void inc(Instruction ins){
+		register[0] += 1;
+		// check for overflow, set carry
 	}
 	
-	private void shiftLeftLogical(){}
+	@InstructionImpl("DEC")
+	private void dec(Instruction ins){
+		register[0] -= 1;
+		// check for overflow, set carry
+	}
 
 	@InstructionImpl("LWDD")
 	private void loadWordDirect(Instruction ins){
@@ -123,4 +139,102 @@ public class MiniPPC_CPU {
 	private void storeWordDirect(Instruction ins){
 		RAM[ins.operands[1]] = register[ins.operands[0]];
 	}
+	
+	@InstructionImpl("SRA")
+	private void sra(Instruction ins){
+		carry = (register[0] & 1);
+		register[0] >>>= 1;
+	}
+	
+	@InstructionImpl("SLA")
+	private void shiftLeftArithmetic(Instruction ins){
+		carry = (register[0] >> 15);
+		int sign = register[0] & 2^15;
+		register[0] = (short)(register[0] << 1);
+		register[0] |= sign;
+	}
+
+	@InstructionImpl("SRL")
+	private void srl(Instruction ins){
+		carry = (register[0] & 1);
+		register[0] >>= 1;
+	}
+	
+	@InstructionImpl("SLL")
+	private void shiftLeftLogical(Instruction ins){
+		carry = (register[0] >> 15);
+		register[0] = (short)(register[0] << 1);
+	}
+
+	@InstructionImpl("AND")
+	private void and(Instruction ins){
+		register[0] &= register[ins.operands[0]];
+	}
+	@InstructionImpl("OR")
+	private void or(Instruction ins){
+		register[0] |= register[ins.operands[0]];
+	}
+	
+	@InstructionImpl("NOT")
+	private void not(Instruction ins){
+		//register[0] = (short)~register[0];
+		register[0] = (short)(register[0] ^ 0xffff);
+	}
+	
+	@InstructionImpl("BZ")
+	private void branchZero(Instruction ins){
+		if(register[0] == 0){
+			IP = register[ins.operands[0]];
+		}
+	}
+	
+	@InstructionImpl("BNZ")
+	private void branchNotZero(Instruction ins){
+		if(register[0] != 0){
+			IP = register[ins.operands[0]];
+		}
+	}
+
+	@InstructionImpl("BC")
+	private void branchCarry(Instruction ins){
+		if(carry == 1){
+			IP = register[ins.operands[0]];
+		}
+	}
+
+	@InstructionImpl("B")
+	private void branch(Instruction ins){
+		IP = register[ins.operands[0]];
+	}
+
+	@InstructionImpl("BZD")
+	private void branchZeroDirect(Instruction ins){
+		if(register[0] == 1){
+			IP = ins.operands[0];
+		}
+	}	
+	
+	@InstructionImpl("BNZD")
+	private void branchNotZeroDirect(Instruction ins){
+		if(register[0] != 0){
+			IP = ins.operands[0];
+		}
+	}
+
+	@InstructionImpl("BCD")
+	private void branchCarryDirect(Instruction ins){
+		if(carry == 1){
+			IP = ins.operands[0];		}
+	}
+
+	@InstructionImpl("BD")
+	private void branchDirect(Instruction ins){
+		IP = ins.operands[0];
+	}
+	
+	@InstructionImpl("END")
+	private void end(Instruction ins) {
+		isHalted = true;
+	}
+
 }
