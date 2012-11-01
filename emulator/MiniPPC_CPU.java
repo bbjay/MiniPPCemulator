@@ -103,6 +103,7 @@ public class MiniPPC_CPU {
 	@InstructionImpl("CLR")
 	private void clr(Instruction ins){
 		register[ins.operands[0]] = 0;
+		carry = 0;
 	}
 	
 	@InstructionImpl("ADDD")
@@ -113,20 +114,27 @@ public class MiniPPC_CPU {
 	
 	@InstructionImpl("ADD")
 	private void add(Instruction ins){
+		short sh = register[ins.operands[0]];
+		int result = register[0] + sh; // cheap&dirty solution ;-)
 		register[0] += register[ins.operands[0]];
-		// check for overflow, set carry
+		if (result != register[0]) carry = 1;
+		else carry = 0;
 	}
-	
+
 	@InstructionImpl("INC")
-	private void inc(Instruction ins){
+	private void inc(Instruction ins) {
+		short sh = register[0];
 		register[0] += 1;
-		// check for overflow, set carry
+		if (sh > register[0]) carry = 1;
+		else carry = 0;
 	}
-	
+
 	@InstructionImpl("DEC")
-	private void dec(Instruction ins){
+	private void dec(Instruction ins) {
+		short sh = register[0];
 		register[0] -= 1;
-		// check for overflow, set carry
+		if (sh < register[0]) carry = 1;
+		else carry = 0;
 	}
 
 	@InstructionImpl("LWDD")
