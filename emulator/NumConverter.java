@@ -24,9 +24,13 @@ public class NumConverter{
 	 * @param number, for example: 17908
 	 * @return String representing a 16-digit binary, for example: "0100010111110100"
 	 */
-	public static String decToBinString(int number){
+	public static String decToBinString(short number){
+		String s = Integer.toBinaryString(number);
+		// negative integers will have 32bit (11111111...1 cause of Two's-complement)
+		// shorten it to 16 chars
+		if(s.length() > 16) s = s.substring(s.length()-16, s.length());
 
-		return String.format("%16s", Integer.toBinaryString(number)).replace(" ", "0");
+		return String.format("%16s", s).replace(" ", "0");
 		
 	}
 	

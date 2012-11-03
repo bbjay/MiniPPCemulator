@@ -16,9 +16,9 @@ public class TestNumConverter {
 	}
 	@Test
 	public void test2() {
-		System.out.println(NumConverter.decToBinString(17908));
+		System.out.println(NumConverter.decToBinString((short) 17908));
 		
-		assertEquals("0100010111110100", NumConverter.decToBinString(17908));
+		assertEquals("0100010111110100", NumConverter.decToBinString((short) 17908));
 	}
 	
 }

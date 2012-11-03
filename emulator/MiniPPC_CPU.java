@@ -61,15 +61,16 @@ public class MiniPPC_CPU {
 	
 	public void printRegisters(){
 		for (int i = 0; i < register.length; i++) {
-			System.out.println("R"+i+": "+ register[i]);
+			//System.out.println("R"+i+":"+ + " "+ register[i]);
+			System.out.println(String.format("R%d: %s %6d",i,NumConverter.decToBinString(register[i]), register[i]));
 		}
-		System.out.println("IR: "+ IR );
+		System.out.println("IR: "+NumConverter.decToBinString(IR) );
 		System.out.println(String.format("IP: %3s  carry: %s  cycles: %6s", IP, carry, cycle_count) );
 	}
 	
 	public void printRam(){
-		System.out.print("RAM[500:]:");
-		for (int i = 500; i < RAM.length; i++) {
+		for (int i = 500; i < RAM.length && i < 530; i++) {
+			if(i%10==0) System.out.print("\nRAM["+i+":]:");
 			System.out.print(String.format(" 0x%04x",RAM[i]));
 		}
 		System.out.println();
