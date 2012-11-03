@@ -43,20 +43,41 @@ public class AssemblerCompiler2 extends AssemblerCompiler {
 	}
 	
 	/**
-	 * @param list
+	 * Preprocesses the assembler code to handle it over to the compiler:
+	 * 1. removes comments
+	 * 2. resolves labels to absolute addresses
+	 * 
+	 * @param list assembler code
 	 * @return list
-	 * Preprocesses the code to handle it over to the compiler.
-	 * Resolves labels to absolute addresses
 	 */
 	private List<String> preprocess(List<String> list){
 		HashMap<String,Integer> labelLookUpTable = new HashMap<String, Integer>();
 		// search for label declarations, store its address in the LUT and remove it from our code
 		for (int i = 0; i < list.size(); i++) {
-			String line = list.get(i);
+			String line = list.get(i).trim();
+			if (line.isEmpty() || line.equals(";")) { // remove blank lines
+				list.remove(i);
+				i--;
+				continue;
+			}
+			// remove comments
+			String[] fragments = line.split(";");
+			if (fragments.length > 1) {
+				System.out.println(fragments.length + " "+ fragments[0]);
+				line = fragments[0].trim();
+				if(line.length() > 0)
+					list.set(i, line);
+				else {
+					list.remove(i);
+					i--;
+				}
+			}
+			// detect label declaration
 			if (line.endsWith(":")) {
 				String label = list.get(i).replaceFirst(":", "");
 				labelLookUpTable.put(label, i);
 				list.remove(i);
+				i--;
 			}
 		}
 		// search for label usage and replace it with corresponding address
