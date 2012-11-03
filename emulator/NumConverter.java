@@ -1,9 +1,6 @@
 package ch.zhaw.inf3.emulator;
 
-public class TransformNumbersAndFormats{
-
-	
-	
+public class NumConverter{
 	
 	/**
 	 * @param op_pattern, for example: "0100010111110100"
@@ -33,19 +30,5 @@ public class TransformNumbersAndFormats{
 		
 	}
 	
-	
-	
-	/**
-	 * @param command
-	 * @return String, representing 
-	 */
-	public static String assemble(String command){
-		
-		Instruction instruction = new InstructionSetArchitecture().getByMnemonic(command);
-		
-		
-		return "to be implemented";
-	//	short out = new InstructionSetArchitecture().getByMnemonic("LWDD").assemble(op_args);
-	}
 }
 

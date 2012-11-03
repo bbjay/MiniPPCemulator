@@ -12,7 +12,7 @@ import org.junit.runners.Parameterized;
 
 import ch.zhaw.inf3.emulator.Instruction;
 import ch.zhaw.inf3.emulator.InstructionSetArchitecture;
-import ch.zhaw.inf3.emulator.TransformNumbersAndFormats;
+import ch.zhaw.inf3.emulator.NumConverter;
 
 @RunWith(Parameterized.class)
 public class TestISA {
