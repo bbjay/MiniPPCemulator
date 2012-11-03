@@ -44,6 +44,7 @@ public class MiniPPC_CPU {
 	public void reset(){
 		IP = isa.start_offset;
 		isHalted = false;
+		carry = 0;
 	}
 
 	public void loadCode(short[] words){
@@ -63,13 +64,13 @@ public class MiniPPC_CPU {
 			System.out.println("R"+i+": "+ register[i]);
 		}
 		System.out.println("IR: "+ IR );
-		System.out.println("IP: "+ IP );
+		System.out.println(String.format("IP: %3s  carry: %s  cycles: %6s", IP, carry, cycle_count) );
 	}
 	
 	public void printRam(){
-		System.out.print("RAM[500:]: ");
+		System.out.print("RAM[500:]:");
 		for (int i = 500; i < RAM.length; i++) {
-			System.out.print(String.format("0x%4s",Integer.toHexString(RAM[i])).replace(" ", "0") +" ");
+			System.out.print(String.format(" 0x%04x",RAM[i]));
 		}
 		System.out.println();
 	}
