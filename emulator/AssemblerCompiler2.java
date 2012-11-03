@@ -37,8 +37,8 @@ public class AssemblerCompiler2 extends AssemblerCompiler {
 		return code;
 	}
 	
-	public short parseInt(String reg){
-		String num = reg.replaceFirst("R", "").replaceFirst("#", "");
+	public short parseInt(String op){
+		String num = op.replaceAll("[R#,]", "");
 		return (short)Integer.parseInt(num);
 	}
 	
