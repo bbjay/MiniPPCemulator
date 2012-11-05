@@ -16,7 +16,9 @@ public class MiniPPCEmulator {
 		
 		emu.loadAssemblerCodeFromFile("src/ch/zhaw/inf3/emulator/booth.asm");
 		emu.loadParameters(new short[]{ -15, -32768 });
-		emu.runSlow();
+		//emu.runFast();
+		emu.runSlow(33);
+		//emu.runSteped();
 
 	}
 	
@@ -35,7 +37,7 @@ public class MiniPPCEmulator {
 		cpu.reset();
 	}
 	
-	public void runSlow(){
+	public void runSlow(long delay){
 		while (!cpu.isHalted) {
 			StringBuilder buffer = new StringBuilder();
 			buffer.append("---------------------------------\n");
@@ -43,6 +45,7 @@ public class MiniPPCEmulator {
 			cpu.printRegisters(buffer);
 			cpu.printRam(buffer);
 			System.out.println(buffer);
+			try { Thread.sleep(delay); } catch (InterruptedException e) { e.printStackTrace(); }
 		}
 		cpu.reset();
 	}
