@@ -14,8 +14,8 @@ public class MiniPPCEmulator {
 	public static void main(String[] args) {
 		MiniPPCEmulator emu = new MiniPPCEmulator();
 		
-		emu.loadAssemblerCodeFromFile("src/ch/zhaw/inf3/emulator/test/resources/sum_label.asm");
-		emu.loadParameters(new short[]{ 1, 0, 10 });
+		emu.loadAssemblerCodeFromFile("src/ch/zhaw/inf3/emulator/booth.asm");
+		emu.loadParameters(new short[]{ -15, -32768 });
 		emu.runSlow();
 
 	}
@@ -35,6 +35,7 @@ public class MiniPPCEmulator {
 	
 	public void runSlow(){
 		while (!cpu.isHalted) {
+			System.out.println("---------------------------------");
 			cpu.runCycle();
 			cpu.printRegisters();
 			cpu.printRam();
