@@ -1,7 +1,11 @@
 package ch.zhaw.inf3.emulator;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -15,11 +19,13 @@ public class MiniPPCEmulator {
 		MiniPPCEmulator emu = new MiniPPCEmulator();
 		
 		emu.loadAssemblerCodeFromFile("src/ch/zhaw/inf3/emulator/booth.asm");
+		//emu.loadMachineCodeFromFile("src/ch/zhaw/inf3/emulator/out.bin");
 		emu.loadParameters(new short[]{ -15, -32768 });
 		//emu.runFast();
 		emu.runSlow(33);
 		//emu.runSteped();
-
+		
+		//emu.dumpCodeToFile("src/ch/zhaw/inf3/emulator/out.bin");
 	}
 	
 	public MiniPPCEmulator(){
@@ -65,7 +71,22 @@ public class MiniPPCEmulator {
 		cpu.reset();
 	}
 	
-	public void loadMachineCodeFromFile(){};
+	public void loadMachineCodeFromFile(String fileName){
+		DataInputStream in = null;
+		File file;
+		short[] code = null;
+		try {
+			file = new File(fileName);
+			code = new short[(int)(file.length()/2)];
+			in = new DataInputStream(new FileInputStream(file));
+			for (int i = 0; i < code.length; i++) {
+				code[i] = in.readShort();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		cpu.loadCode(code);
+	};
 	
 	public void loadAssemblerCodeFromFile(String fileName){
 		FileParser fp = new FileParser();
@@ -83,8 +104,16 @@ public class MiniPPCEmulator {
 		cpu.loadDataAtOffset(params, 500);
 	}
 	
-	public void compileAssembler(){};
+	public void dumpCodeToFile(String fileName){
+		DataOutputStream out = null;
+		try {
+			out = new DataOutputStream(new FileOutputStream(fileName));
+			short[] code = cpu.getCodeAt(100, 512);
+			for (int i = 0; i < code.length; i++) out.writeShort(code[i]);
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	};
 	
-	public void disassemble(){};
-
 }

@@ -56,6 +56,12 @@ public class MiniPPC_CPU {
 		}
 	}
 	
+	public short[] getCodeAt(int start, int stop){
+		short[] code = new short[stop-start];
+		for (int i = 0; i < code.length; i++) code[i] = RAM[start+i];
+		return code;
+	}
+	
 	public void loadDataAtOffset(short[] words, int offset){
 		for (int i = 0; i < words.length; i++) {
 			RAM[offset+i] = words[i];
