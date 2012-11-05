@@ -17,12 +17,12 @@ LWDD R0 zero
 SWDD R0 #504		; suffixP = 0
 LWDD R0 count
 SWDD R0 #502		; set counter
+LWDD R3 one			; store 1 in R3
 
 loopstart:
-LWDD R1 #501		; load P2
+LWDD R0 #501		; load P2
 LWDD R2 #504		; load suffixP
-LWDD R0 one
-AND R1
+AND R3				; AND 1
 ADD R2				; add suffixP
 DEC
 BNZD rightshift		; Case 3. + 4. (00 or 11)
@@ -44,14 +44,12 @@ SWDD R0 #503		; P1=P1+S1
 
 rightshift:
 LWDD R0 #503		; load P1
-LWDD R1 one
-AND R1				; if LSb==1, akku=1, else akku=0
+AND R3				; AND 1 -> if LSb==1, akku=1, else akku=0
 BZD LogicShiftP2	; if LSb==1 do AritmeticShiftP2 else do LogicShiftP2
 
 AritmeticShiftP2:
 LWDD R0 #501		; load P2
-LWDD R1 one
-AND R1				; if LSb==1, akku==1, else akku==0
+AND R3				; AND 1 -> if LSb==1, akku=1, else akku=0
 SWDD R0 #504		; suffixP = akku bzw. LSb
 LWDD R0 #501		; load P2
 SRA
@@ -62,8 +60,7 @@ BD AritmeticShiftP1
 
 LogicShiftP2:
 LWDD R0 #501		; load P2
-LWDD R1 one
-AND R1				; if LSb==1, akku==1, else akku==0
+AND R3				; AND 1 -> if LSb==1, akku=1, else akku=0
 SWDD R0 #504		; suffixP = akku bzw. LSb
 LWDD R0 #501		; load P2
 SRL
