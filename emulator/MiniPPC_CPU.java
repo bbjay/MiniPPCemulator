@@ -13,6 +13,8 @@ public class MiniPPC_CPU {
 	private int carry;
 	private InstructionSetArchitecture isa;
 	private InsImplAnnotationParser annotaion_parser;
+	private int lwdd_calls = 0;
+	private int swdd_calls = 0;
 
 	public boolean isHalted = false;
 
@@ -65,7 +67,7 @@ public class MiniPPC_CPU {
 			System.out.println(String.format("R%d: %s %6d",i,NumConverter.decToBinString(register[i]), register[i]));
 		}
 		System.out.println("IR: "+NumConverter.decToBinString(IR) );
-		System.out.println(String.format("IP: %3s  carry: %s  cycles: %6s", IP, carry, cycle_count) );
+		System.out.println(String.format("IP: %3s  carry: %s  cycles:%5s  #LWDD:%4s  #SWDD:%4s", IP, carry, cycle_count, lwdd_calls, swdd_calls) );
 	}
 	
 	public void printRam(){
@@ -92,6 +94,7 @@ public class MiniPPC_CPU {
 					m.invoke(this, ins);
 				} catch (Exception e) {
 					e.printStackTrace();
+					System.exit(-1);
 				}
 			else {
 				System.err.println("Instruction not implemented: " + ins.mnemonic);
@@ -141,13 +144,14 @@ public class MiniPPC_CPU {
 
 	@InstructionImpl("LWDD")
 	private void loadWordDirect(Instruction ins){
-		//System.out.println("invoked lwdd with op1:" + ins.operands[0] + " op2:" + ins.operands[1]);
 		register[ins.operands[0] ] = RAM[ins.operands[1]];
+		lwdd_calls++;
 	}
 
 	@InstructionImpl("SWDD")
 	private void storeWordDirect(Instruction ins){
 		RAM[ins.operands[1]] = register[ins.operands[0]];
+		swdd_calls++;
 	}
 	
 	@InstructionImpl("SRA")
