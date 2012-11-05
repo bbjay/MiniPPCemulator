@@ -17,15 +17,21 @@ public class AssemblerCompiler2 extends AssemblerCompiler {
 		for (int i = 0; i < list.size(); i++) {
 			String[] subString = list.get(i).split(" ");
 			Instruction instruction = isa.getByMnemonic(subString[0]);
-			
+
 			short[] operands = new short[2];
-			if (subString.length > 1 ) {
-				operands[0] = parseInt(subString[1]);
+		
+			try {
+				if (subString.length > 1) {
+					operands[0] = parseInt(subString[1]);
+				}
+				if (subString.length > 2) {
+					operands[1] = parseInt(subString[2]);
+				}
+
+			} catch (Exception e) {
+				System.err.println("could not parse operands for " + list.get(i) + " at line " + i);
+				System.exit(-1);
 			}
-			if (subString.length > 2 ) {
-				operands[1] = parseInt(subString[2]);
-			}
-			//System.out.println(operands[0] +" "+ operands[1]);
 			
 			if(instruction != null) {
 				code[i] = instruction.encodeOperandValues(operands);
@@ -63,7 +69,7 @@ public class AssemblerCompiler2 extends AssemblerCompiler {
 			// remove comments
 			String[] fragments = line.split(";");
 			if (fragments.length > 1) {
-				System.out.println(fragments.length + " "+ fragments[0]);
+				//System.out.println(fragments.length + " "+ fragments[0]);
 				line = fragments[0].trim();
 				if(line.length() > 0)
 					list.set(i, line);
