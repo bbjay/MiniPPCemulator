@@ -153,7 +153,7 @@ public class MiniPPC_CPU {
 	@InstructionImpl("SRA")
 	private void sra(Instruction ins){
 		carry = (register[0] & 1);
-		register[0] >>>= 1;
+		register[0] >>= 1;
 	}
 	
 	@InstructionImpl("SLA")
@@ -167,7 +167,8 @@ public class MiniPPC_CPU {
 	@InstructionImpl("SRL")
 	private void srl(Instruction ins){
 		carry = (register[0] & 1);
-		register[0] >>= 1;
+		register[0] >>>= 1; // doesn't insert 0s
+		register[0] = (short)(register[0] & (short)0x7fff);
 	}
 	
 	@InstructionImpl("SLL")
@@ -219,7 +220,7 @@ public class MiniPPC_CPU {
 
 	@InstructionImpl("BZD")
 	private void branchZeroDirect(Instruction ins){
-		if(register[0] == 1){
+		if(register[0] == 0){
 			IP = ins.operands[0];
 		}
 	}	
