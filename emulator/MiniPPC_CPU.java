@@ -17,6 +17,7 @@ public class MiniPPC_CPU {
 	private int swdd_calls = 0;
 
 	public boolean isHalted = false;
+	public Instruction current_instruction;
 
 	public MiniPPC_CPU(int memory){
 		this.RAM = new short[memory];
@@ -61,30 +62,27 @@ public class MiniPPC_CPU {
 		}
 	}
 	
-	public void printRegisters(){
+	public void printRegisters(StringBuilder buffer){
 		for (int i = 0; i < register.length; i++) {
 			//System.out.println("R"+i+":"+ + " "+ register[i]);
-			System.out.println(String.format("R%d: %s %6d",i,NumConverter.decToBinString(register[i]), register[i]));
+			buffer.append(String.format("R%d: %s %6d\n",i,NumConverter.decToBinString(register[i]), register[i]));
 		}
-		System.out.println("IR: "+NumConverter.decToBinString(IR) );
-		System.out.println(String.format("IP: %3s  carry: %s  cycles:%5s  #LWDD:%4s  #SWDD:%4s", IP, carry, cycle_count, lwdd_calls, swdd_calls) );
+		buffer.append(String.format("IR: %s %s\n", NumConverter.decToBinString(IR), current_instruction));
+		buffer.append(String.format("IP: %3s  carry: %s  cycles:%5s  #LWDD:%4s  #SWDD:%4s\n", IP, carry, cycle_count, lwdd_calls, swdd_calls) );
 	}
 	
-	public void printRam(){
+	public void printRam(StringBuilder buffer){
 		for (int i = 500; i < RAM.length && i < 530; i++) {
-			if(i%10==0) System.out.print("\nRAM["+i+":]:");
-			System.out.print(String.format(" 0x%04x",RAM[i]));
+			if(i%10==0) buffer.append("\nRAM["+i+":]:");
+			buffer.append(String.format(" 0x%04x",RAM[i]));
+			//buffer.append(String.format(" %s", NumConverter.decToBinString(RAM[i])));
 		}
-		System.out.println();
+		buffer.append("\n");
 	}
 
 	private void executeInstruction(Instruction ins) {
 		if (ins != null){
-			System.out.print("execute " + ins.mnemonic);
-			for (int i = 0; i < ins.num_operands; i++) {
-				System.out.print(" " +ins.operands[i]);
-			}
-			System.out.println();
+			current_instruction = ins;
 			
 			String method_name = annotaion_parser.instruction_map.get(ins.mnemonic);
 			

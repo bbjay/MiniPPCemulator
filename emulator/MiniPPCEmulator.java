@@ -28,17 +28,21 @@ public class MiniPPCEmulator {
 		while (!cpu.isHalted) {
 			cpu.runCycle();
 		}
-		cpu.printRegisters();
-		cpu.printRam();
+		StringBuilder buffer = new StringBuilder();
+		cpu.printRegisters(buffer);
+		cpu.printRam(buffer);
+		System.out.println(buffer);;
 		cpu.reset();
 	}
 	
 	public void runSlow(){
 		while (!cpu.isHalted) {
-			System.out.println("---------------------------------");
+			StringBuilder buffer = new StringBuilder();
+			buffer.append("---------------------------------\n");
 			cpu.runCycle();
-			cpu.printRegisters();
-			cpu.printRam();
+			cpu.printRegisters(buffer);
+			cpu.printRam(buffer);
+			System.out.println(buffer);
 		}
 		cpu.reset();
 	}
@@ -47,8 +51,11 @@ public class MiniPPCEmulator {
 		Scanner input = new Scanner(System.in);
 		do {
 			cpu.runCycle();
-			cpu.printRegisters();
-			cpu.printRam();
+			StringBuilder buffer = new StringBuilder();
+			buffer.append("---------------------------------\n");
+			cpu.printRegisters(buffer);
+			cpu.printRam(buffer);
+			System.out.println(buffer);
 		} while (!cpu.isHalted && !input.nextLine().equals("q"));
 		
 		input.close();

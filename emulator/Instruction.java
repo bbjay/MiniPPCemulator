@@ -74,5 +74,14 @@ public class Instruction {
 			}
 		}
 	}
+	
+	public String toString(){
+		StringBuilder out = new StringBuilder();
+		out.append(mnemonic);
+		for (int i = 0; i < num_operands; i++) {
+			out.append(" " +operands[i]);
+		}
+		return out.toString();
+	}
 
 }
