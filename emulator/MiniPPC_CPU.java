@@ -57,7 +57,7 @@ public class MiniPPC_CPU {
 	}
 	
 	public short[] getCodeAt(int start, int stop){
-		short[] code = new short[stop-start];
+		short[] code = new short[stop-start +1];
 		for (int i = 0; i < code.length; i++) code[i] = RAM[start+i];
 		return code;
 	}

@@ -25,6 +25,8 @@ public class MiniPPCEmulator {
 		emu.runSlow(33);
 		//emu.runSteped();
 		
+		System.out.print("Result (as 32bit signed int): " + emu.parseIntAt(510));
+		
 		//emu.dumpCodeToFile("src/ch/zhaw/inf3/emulator/out.bin");
 	}
 	
@@ -114,6 +116,11 @@ public class MiniPPCEmulator {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	};
+	}
+	
+	public int parseIntAt(int addr){
+		short[] code = cpu.getCodeAt(addr, addr+1);
+		return (code[0] << 16) | (code[1] & 0x0000ffff);
+	}
 	
 }
